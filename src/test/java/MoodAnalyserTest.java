@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class MoodAnalyserTest {
 
     @Test
@@ -74,7 +77,30 @@ public class MoodAnalyserTest {
         }
     }
 
+    @Test
+    public void whenGivenAnalyserObject_whenProper_shouldReturnObject() {
+        try {
+            Constructor<?> constructor = Class.forName("com.bridgelabz.MoodAnalyzer").getConstructor(String.class);
+            Object object = constructor.newInstance("i am Happy");
+            MoodAnalyzer moodAnalyzer =(MoodAnalyzer)object;
+            String message=moodAnalyzer.analyse();
+            Assert.assertEquals("Happy",message);
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
 //    @Test
-//    public void when() {
+//    public void givenMoodAnalyserClass_whenProper_SholdReturnObject() {
+//
 //    }
 }
