@@ -3,11 +3,18 @@ package com.bridgelabz;
 import com.bridgelabz.com.bridgelabz.exception.MoodAnalyzerException;
 
 public class MoodAnalyzer {
-    public String analyse(String message)  {
-        try {
-            if(message.length() == 0){
 
-                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.Empty_Exception,"please enter message");
+    private String message;
+
+   public MoodAnalyzer(String message){
+        this.message = message;
+    }
+
+    public String analyse()  {
+        try {
+            if(message.length() == 0) {
+
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.EMPTY_EXCEPTION,"please enter message");
 
             }
             else if (message.contains("sad") || message.contains("Sad")) {
@@ -19,7 +26,7 @@ public class MoodAnalyzer {
             }
         }
         catch (NullPointerException e) {
-           throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.Null_Exception,"please enter proper message");
+           throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NULL_EXCEPTION,"please enter proper message");
         }
     }
 

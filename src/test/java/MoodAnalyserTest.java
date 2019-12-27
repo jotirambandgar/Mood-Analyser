@@ -9,8 +9,8 @@ public class MoodAnalyserTest {
     @Test
     public void whenGivenSad_shouldReturnSad() {
 
-        MoodAnalyzer analyser = new MoodAnalyzer();
-        String message = analyser.analyse("I am sad right now");
+        MoodAnalyzer analyser = new MoodAnalyzer("I am sad right now");
+        String message = analyser.analyse();
         Assert.assertEquals("Sad",message);
 
     }
@@ -18,8 +18,8 @@ public class MoodAnalyserTest {
     @Test
     public void whenGivenHappy_shouldRetunHappy() {
 
-        MoodAnalyzer analyser = new MoodAnalyzer();
-        String message = analyser.analyse("i am happy right now");
+        MoodAnalyzer analyser = new MoodAnalyzer("i am happy right now");
+        String message = analyser.analyse();
         Assert.assertEquals("Happy",message);
 
     }
@@ -27,8 +27,8 @@ public class MoodAnalyserTest {
     @Test
     public void whenGivenSadMessageWithAlphbetCapital_shouldReturnSad() {
 
-        MoodAnalyzer analyser = new MoodAnalyzer();
-        String message = analyser.analyse("i am Sad right now");
+        MoodAnalyzer analyser = new MoodAnalyzer("i am Sad right now");
+        String message = analyser.analyse();
         Assert.assertEquals("Sad",message);
 
     }
@@ -39,24 +39,42 @@ public class MoodAnalyserTest {
 
             ExpectedException expectedException = ExpectedException.none();
             expectedException.expect(MoodAnalyzerException.class);
-            MoodAnalyzer analyser = new MoodAnalyzer();
-            String message = analyser.analyse(null);
-            Assert.assertEquals("Invalid", message);
+            MoodAnalyzer analyser = new MoodAnalyzer(null);
+            String message = analyser.analyse();
+           // Assert.assertEquals("Invalid", message);
         }
+
         catch (MoodAnalyzerException exception){
-            exception.printStackTrace();
+            Assert.assertEquals(MoodAnalyzerException.ExceptionType.NULL_EXCEPTION, exception.type);
         }
     }
 
     @Test
     public void whenGivenMessageIsNull_sholdThrowException() {
         try{
-            MoodAnalyzer analyser = new MoodAnalyzer();
-            String message = analyser.analyse(null);
+            MoodAnalyzer analyser = new MoodAnalyzer(null);
+            String message = analyser.analyse();
         }
         catch (Exception e) {
+
             Assert.assertEquals("please enter proper message",e.getMessage());
         }
 
     }
+
+    @Test
+    public void whenGivenMessageIsNull_shouldGiveNullExceptionType() {
+        try{
+            MoodAnalyzer analyser = new MoodAnalyzer(null);
+            String message = analyser.analyse();
+        }
+        catch (Exception e) {
+
+            Assert.assertEquals("please enter proper message",e.getMessage());
+        }
+    }
+
+//    @Test
+//    public void when() {
+//    }
 }
