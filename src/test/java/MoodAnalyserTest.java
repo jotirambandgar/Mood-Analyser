@@ -111,5 +111,29 @@ public class MoodAnalyserTest {
 
     @Test
     public void giveClassName_whenNotProper_shouldThrowCustomException() {
+        try {
+            Constructor<?> constructor = Class.forName("com.bridgelabz.ModAnalyzer").getConstructor(String.class);
+            Object object = constructor.newInstance("i am Happy");
+            MoodAnalyzer moodAnalyzer = (MoodAnalyzer) object;
+            String message = moodAnalyzer.analyse();
+            Assert.assertEquals("Happy", message);
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            try {
+                throw new MoodAnalyzerException(MoodAnalyzerException.ExceptionType.NO_CLASS_EXCEPTION, "No Such Class Error");
+            }
+            catch (MoodAnalyzerException ex){
+                System.out.println(ex.getMessage());
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
     }
 }
