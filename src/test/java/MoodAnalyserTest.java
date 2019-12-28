@@ -1,4 +1,5 @@
 import com.bridgelabz.MoodAnalyzer;
+import com.bridgelabz.MoodAnalyzerFactory;
 import com.bridgelabz.com.bridgelabz.exception.MoodAnalyzerException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class MoodAnalyserTest {
 
         MoodAnalyzer analyser = new MoodAnalyzer("I am sad right now");
         String message = analyser.analyse();
-        Assert.assertEquals("Sad",message);
+        Assert.assertEquals("Sad", message);
 
     }
 
@@ -23,7 +24,7 @@ public class MoodAnalyserTest {
 
         MoodAnalyzer analyser = new MoodAnalyzer("i am happy right now");
         String message = analyser.analyse();
-        Assert.assertEquals("Happy",message);
+        Assert.assertEquals("Happy", message);
 
     }
 
@@ -32,7 +33,7 @@ public class MoodAnalyserTest {
 
         MoodAnalyzer analyser = new MoodAnalyzer("i am Sad right now");
         String message = analyser.analyse();
-        Assert.assertEquals("Sad",message);
+        Assert.assertEquals("Sad", message);
 
     }
 
@@ -44,36 +45,32 @@ public class MoodAnalyserTest {
             expectedException.expect(MoodAnalyzerException.class);
             MoodAnalyzer analyser = new MoodAnalyzer(null);
             String message = analyser.analyse();
-           // Assert.assertEquals("Invalid", message);
-        }
-
-        catch (MoodAnalyzerException exception){
+            // Assert.assertEquals("Invalid", message);
+        } catch (MoodAnalyzerException exception) {
             Assert.assertEquals(MoodAnalyzerException.ExceptionType.NULL_EXCEPTION, exception.type);
         }
     }
 
     @Test
     public void whenGivenMessageIsNull_sholdThrowException() {
-        try{
+        try {
             MoodAnalyzer analyser = new MoodAnalyzer(null);
             String message = analyser.analyse();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
-            Assert.assertEquals("please enter proper message",e.getMessage());
+            Assert.assertEquals("please enter proper message", e.getMessage());
         }
 
     }
 
     @Test
     public void whenGivenMessageIsNull_shouldGiveNullExceptionType() {
-        try{
+        try {
             MoodAnalyzer analyser = new MoodAnalyzer(null);
             String message = analyser.analyse();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
-            Assert.assertEquals("please enter proper message",e.getMessage());
+            Assert.assertEquals("please enter proper message", e.getMessage());
         }
     }
 
@@ -82,9 +79,9 @@ public class MoodAnalyserTest {
         try {
             Constructor<?> constructor = Class.forName("com.bridgelabz.MoodAnalyzer").getConstructor(String.class);
             Object object = constructor.newInstance("i am Happy");
-            MoodAnalyzer moodAnalyzer =(MoodAnalyzer)object;
-            String message=moodAnalyzer.analyse();
-            Assert.assertEquals("Happy",message);
+            MoodAnalyzer moodAnalyzer = (MoodAnalyzer) object;
+            String message = moodAnalyzer.analyse();
+            Assert.assertEquals("Happy", message);
 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -99,8 +96,20 @@ public class MoodAnalyserTest {
         }
     }
 
-//    @Test
-//    public void givenMoodAnalyserClass_whenProper_SholdReturnObject() {
-//
-//    }
+    @Test
+    public void givenMoodAnalyserClass_whenProper_ShouldReturnObject() {
+       MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createModeAnalyser("i am Happy");
+       Assert.assertEquals("Happy",moodAnalyzer.analyse());
+    }
+
+    @Test
+    public void whenGivenObjectWithProperMessage_shouldReturnTrue() {
+        MoodAnalyzer moodAnalyzer1 = new MoodAnalyzer("i am Happy");
+        MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createModeAnalyser("i am Happy");
+        Assert.assertEquals(true,moodAnalyzer1.equals(moodAnalyzer));
+    }
+
+    @Test
+    public void giveClassName_whenNotProper_shouldThrowCustomException() {
+    }
 }

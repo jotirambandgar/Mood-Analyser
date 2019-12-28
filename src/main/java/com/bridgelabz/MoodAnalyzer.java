@@ -2,6 +2,8 @@ package com.bridgelabz;
 
 import com.bridgelabz.com.bridgelabz.exception.MoodAnalyzerException;
 
+import java.util.Objects;
+
 public class MoodAnalyzer {
 
     private String message;
@@ -30,6 +32,14 @@ public class MoodAnalyzer {
         }
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MoodAnalyzer that = (MoodAnalyzer) o;
+        return Objects.equals(message, that.message);
     }
+
+
+}
 
