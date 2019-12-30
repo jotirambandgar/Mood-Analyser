@@ -1,5 +1,5 @@
 import com.bridgelabz.MoodAnalyzer;
-import com.bridgelabz.MoodAnalyzerFactory;
+import com.bridgelabz.MoodAnalyzerReflector;
 import com.bridgelabz.com.bridgelabz.exception.MoodAnalyzerException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -100,14 +100,14 @@ public class MoodAnalyserTest {
     @Test
     public void givenMoodAnalyserClass_whenProper_ShouldReturnObject() {
 
-//       MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createModeAnalyser("i am Happy");
+//       MoodAnalyzer moodAnalyzer = MoodAnalyzerReflector.createModeAnalyser("i am Happy");
 //       Assert.assertEquals("Happy",moodAnalyzer.analyse());
     }
 
     @Test
     public void whenGivenObjectWithProperMessage_shouldReturnTrue() {
         MoodAnalyzer moodAnalyzer1 = new MoodAnalyzer("i am Happy");
-//        MoodAnalyzer moodAnalyzer = MoodAnalyzerFactory.createModeAnalyser("i am Happy");
+//        MoodAnalyzer moodAnalyzer = MoodAnalyzerReflector.createModeAnalyser("i am Happy");
 //        Assert.assertEquals(true,moodAnalyzer1.equals(moodAnalyzer));
     }
 
@@ -170,8 +170,8 @@ public class MoodAnalyserTest {
     @Test
     public void whenGivenConstructorWithParameter_shouldReturnObject() {
 
-        Constructor constructor = MoodAnalyzerFactory.getConstructor(String.class);
-        Object object = MoodAnalyzerFactory.getObject(constructor,"i am Happy");
+        Constructor constructor = MoodAnalyzerReflector.getConstructor(String.class);
+        Object object = MoodAnalyzerReflector.getObject(constructor,"i am Happy");
         MoodAnalyzer moodAnalyzer = (MoodAnalyzer) object;
         Assert.assertEquals(true,moodAnalyzer.equals(new MoodAnalyzer("i am Happy")));
 
@@ -180,8 +180,8 @@ public class MoodAnalyserTest {
     @Test
     public void whenGivenConstructorWithNoParameter_shouldReturnObject() {
 
-        Constructor constructor = MoodAnalyzerFactory.getConstructor();
-        Object object = MoodAnalyzerFactory.getObject(constructor);
+        Constructor constructor = MoodAnalyzerReflector.getConstructor();
+        Object object = MoodAnalyzerReflector.getObject(constructor);
         MoodAnalyzer moodAnalyzer = (MoodAnalyzer) object;
         Assert.assertEquals(true,moodAnalyzer.equals(new MoodAnalyzer()));
 
@@ -189,22 +189,14 @@ public class MoodAnalyserTest {
 
 
         @Test
-        public void whenGivenMethodInvokeByReflection_shouldReturnProperMessage() {
-            try {
-                Method method =  Class.forName("com.bridgelabz.MoodAnalyzer").getDeclaredMethod("analyser",String.class);
-                String mood = (String) method.invoke(new MoodAnalyzer(),"i am Happy");
-                Assert.assertEquals("Happy1",mood);
-//                Method[] methods =aClass.getMethods();
+        public void whenGivenMethodInvokeByReflection_shouldReturnProperMessage() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
 
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            Method method = MoodAnalyzerReflector.getMethod("analyser");
+            String mood =(String)method.invoke(new MoodAnalyzer(),"i am Happy");
+            Assert.assertEquals("Happy",mood);
+
 
         }
+
+
 }
