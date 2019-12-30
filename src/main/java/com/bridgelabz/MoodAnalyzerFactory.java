@@ -38,7 +38,6 @@ public class MoodAnalyzerFactory {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-       // Constructor<?> moodConstructor =
         return null;
     }
 

@@ -14,6 +14,11 @@ public class MoodAnalyzer {
     public MoodAnalyzer(String message){
         this.message = message;
     }
+    public String analyser(String message) {
+        this.message=message;
+        return analyse();
+
+    }
 
     public String analyse()  {
         try {

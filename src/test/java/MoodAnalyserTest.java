@@ -7,6 +7,7 @@ import org.junit.rules.ExpectedException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyserTest {
 
@@ -183,6 +184,27 @@ public class MoodAnalyserTest {
         Object object = MoodAnalyzerFactory.getObject(constructor);
         MoodAnalyzer moodAnalyzer = (MoodAnalyzer) object;
         Assert.assertEquals(true,moodAnalyzer.equals(new MoodAnalyzer()));
+
+        }
+
+
+        @Test
+        public void whenGivenMethodInvokeByReflection_shouldReturnProperMessage() {
+            try {
+                Method method =  Class.forName("com.bridgelabz.MoodAnalyzer").getDeclaredMethod("analyser",String.class);
+                String mood = (String) method.invoke(new MoodAnalyzer(),"i am Happy");
+                Assert.assertEquals("Happy1",mood);
+//                Method[] methods =aClass.getMethods();
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
 
         }
 }
