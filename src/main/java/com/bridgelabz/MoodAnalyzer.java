@@ -8,7 +8,10 @@ public class MoodAnalyzer {
 
     private String message;
 
-   public MoodAnalyzer(String message){
+    public MoodAnalyzer() {
+    }
+
+    public MoodAnalyzer(String message){
         this.message = message;
     }
 
@@ -40,6 +43,9 @@ public class MoodAnalyzer {
         return Objects.equals(message, that.message);
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(message);
+    }
 }
 
